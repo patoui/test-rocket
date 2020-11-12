@@ -3,6 +3,7 @@
 #[macro_use] extern crate rocket;
 use rocket::Request;
 use rocket::response::content::Json;
+use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
 use serde::Serialize;
 
@@ -29,6 +30,7 @@ fn main() {
         .register(catchers![not_found])
         .mount("/", routes![hello])
         .mount("/api", routes![api_hello])
+        .mount("/static", StaticFiles::from("static"))
         .attach(Template::fairing())
         .launch();
 }

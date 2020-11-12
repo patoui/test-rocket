@@ -11,4 +11,4 @@ serde = { version = "1.0", features = ["derive"] }
 [dependencies.rocket_contrib]
 version = "0.4.6"
 default-features = false
-features = ["handlebars_templates"]
+features = ["handlebars_templates", "serve"]

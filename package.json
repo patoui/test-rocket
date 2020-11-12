@@ -1,0 +1,27 @@
+{
+  "name": "test-rocket",
+  "version": "1.0.0",
+  "description": "Testing Rust Rocket framework",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "laravel-mix": "^5.0.9",
+    "laravel-mix-svelte": "github:wewowweb/laravel-mix-svelte",
+    "svelte": "^3.29.7",
+    "svelte-loader": "^2.13.6",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patoui/test-rocket.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patoui/test-rocket/issues"
+  },
+  "homepage": "https://github.com/patoui/test-rocket#readme"
+}
