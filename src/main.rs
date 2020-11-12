@@ -12,7 +12,7 @@ fn not_found(req: &Request) -> String {
     format!("Oh no! We couldn't find the requested path '{}'", req.uri())
 }
 
-#[get("/hello")]
+#[get("/")]
 fn hello() -> Template {
     #[derive(Serialize)]
     struct Context { name: String }
