@@ -2,6 +2,7 @@
 name = "test-rocket"
 version = "0.1.0"
 authors = ["Patrique Ouimet <patrique.ouimet@gmail.com>"]
+edition = "2018"
 
 [dependencies]
 rocket = "0.4.6"
