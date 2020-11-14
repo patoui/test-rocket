@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>Userdex!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        .w-1 { width: 10%; }
+        .w-2 { width: 20%; }
+        .w-3 { width: 30%; }
+        .w-4 { width: 40%; }
+        .w-5 { width: 50%; }
+        .w-6 { width: 60%; }
+        .w-7 { width: 70%; }
+        .w-8 { width: 80%; }
+        .w-9 { width: 90%; }
+        .w-10 { width: 100%; }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="display-1">Userdex! <a class="btn btn-primary btn-lg float-right" href="/new">Insert a new User!</a></h1>
+                <hr>
+                <div class="alert alert-info">{{data.1}}</div>
+            </div>
+        </div>
+        <div class="row">
+
+            {{#each data.0}}
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="my-2">
+                            {{this.name}}
+                            <a class="btn btn-sm btn-secondary float-right ml-2" href="/update/{{this.id}}">Edit</a>
+                            <a class="btn btn-sm btn-danger float-right" href="/delete/{{this.id}}">Delete</a>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>ID:</strong> {{this.id}}</p>
+                        <p><strong>Name:</strong> {{this.name}}</p>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
