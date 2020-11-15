@@ -55,11 +55,8 @@ pub fn new(flash: Option<FlashMessage>) -> Template {
     Template::render("new", context)
 }
 
-#[post("/insert", data = "<User_data>")]
-pub fn insert(content_type: &ContentType, User_data: Data) -> Flash<Redirect> {
-    /* File system */
-    use std::fs;
-
+#[post("/insert", data = "<user_data>")]
+pub fn insert(content_type: &ContentType, user_data: Data) -> Flash<Redirect> {
     /* First we declare what we will be accepting on this form */
     let mut options = MultipartFormDataOptions::new();
 
@@ -68,7 +65,7 @@ pub fn insert(content_type: &ContentType, User_data: Data) -> Flash<Redirect> {
     ];
 
     /* If stuff matches, do stuff */
-    let multipart_form_data = MultipartFormData::parse(content_type, User_data, options);
+    let multipart_form_data = MultipartFormData::parse(content_type, user_data, options);
 
     match multipart_form_data {
         Ok(form) => {
@@ -112,22 +109,19 @@ pub fn insert(content_type: &ContentType, User_data: Data) -> Flash<Redirect> {
 #[get("/update/<id>")]
 pub fn update(id: i32) -> Template {
     let mut context = HashMap::new();
-    let User_data = users::table
+    let user_data = users::table
         .select(users::all_columns)
         .filter(users::id.eq(id))
         .first::<User>(&crate::establish_connection())
         .expect("Something happned while retrieving the User of this id");
 
-    context.insert("User", User_data);
+    context.insert("User", user_data);
 
     Template::render("update", &context)
 }
 
-#[post("/update", data = "<User_data>")]
-pub fn process_update(content_type: &ContentType, User_data: Data) -> Flash<Redirect> {
-    /* File system */
-    use std::fs;
-
+#[post("/update", data = "<user_data>")]
+pub fn process_update(content_type: &ContentType, user_data: Data) -> Flash<Redirect> {
     /* First we declare what we will be accepting on this form */
     let mut options = MultipartFormDataOptions::new();
 
@@ -137,7 +131,7 @@ pub fn process_update(content_type: &ContentType, User_data: Data) -> Flash<Redi
     ];
 
     /* If stuff matches, do stuff */
-    let multipart_form_data = MultipartFormData::parse(content_type, User_data, options);
+    let multipart_form_data = MultipartFormData::parse(content_type, user_data, options);
 
     match multipart_form_data {
         Ok(form) => {
