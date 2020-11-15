@@ -11,7 +11,7 @@ pub struct User {
 }
 
 #[derive(Debug, Insertable, AsChangeset)]
-#[table_name="users"]
+#[table_name = "users"]
 pub struct NewUser<'x> {
     pub name: &'x str,
 }

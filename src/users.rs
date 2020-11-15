@@ -8,9 +8,12 @@ use diesel::prelude::*;
 /* Database macros */
 use crate::schema::users;
 
-/* Database data structs (User, NewUser) */
-use crate::models::User;
+/* Database data structs */
 use crate::models::NewUser;
+use crate::models::User;
+
+/* Database interactions */
+use crate::db;
 
 /* To be able to parse raw forms */
 use rocket::http::ContentType;
@@ -29,10 +32,7 @@ pub fn list(flash: Option<FlashMessage>) -> Template {
     let mut context = HashMap::new();
 
     /* Get all our users from database */
-    let users: Vec<User> = users::table
-        .select(users::all_columns)
-        .load::<User>(&crate::establish_connection())
-        .expect("Whoops, like this went bananas!");
+    let users = db::users::list();
 
     /* Insert on the template rendering
     context our new users vec */
@@ -60,9 +60,7 @@ pub fn insert(content_type: &ContentType, user_data: Data) -> Flash<Redirect> {
     /* First we declare what we will be accepting on this form */
     let mut options = MultipartFormDataOptions::new();
 
-    options.allowed_fields = vec![
-        MultipartFormDataField::text("name"),
-    ];
+    options.allowed_fields = vec![MultipartFormDataField::text("name")];
 
     /* If stuff matches, do stuff */
     let multipart_form_data = MultipartFormData::parse(content_type, user_data, options);
@@ -70,14 +68,12 @@ pub fn insert(content_type: &ContentType, user_data: Data) -> Flash<Redirect> {
     match multipart_form_data {
         Ok(form) => {
             /* Insert our form data inside our database */
-            let insert = diesel::insert_into(users::table)
-                .values(NewUser {
-                    name: match form.texts.get("name") {
-                        Some(value) => &value[0].text,
-                        None => "No Name.",
-                    },
-                })
-                .execute(&crate::establish_connection());
+            let insert = db::users::insert(NewUser {
+                name: match form.texts.get("name") {
+                    Some(value) => &value[0].text,
+                    None => "No Name.",
+                },
+            });
 
             match insert {
                 Ok(_) => Flash::success(
@@ -135,28 +131,21 @@ pub fn process_update(content_type: &ContentType, user_data: Data) -> Flash<Redi
 
     match multipart_form_data {
         Ok(form) => {
-            /* Insert our form data inside our database */
-            let insert = diesel::update(
-                users::table.filter(
-                    users::id.eq(form.texts.get("id").unwrap()[0]
-                        .text
-                        .parse::<i32>()
-                        .unwrap()),
-                ),
-            )
-            .set(NewUser {
-                name: match form.texts.get("name") {
-                    Some(value) => &value[0].text,
-                    None => "No Name.",
+            let update = db::users::update(
+                form.texts.get("id").unwrap()[0]
+                    .text
+                    .parse::<i32>()
+                    .unwrap(),
+                NewUser {
+                    name: match form.texts.get("name") {
+                        Some(value) => &value[0].text,
+                        None => "No Name.",
+                    },
                 },
-            })
-            .execute(&crate::establish_connection());
+            );
 
-            match insert {
-                Ok(_) => Flash::success(
-                    Redirect::to("/"),
-                    "Success! We got a new User on our database!",
-                ),
+            match update {
+                Ok(_) => Flash::success(Redirect::to("/"), "Successfully updated!"),
                 Err(err_msg) => Flash::error(
                     Redirect::to("/new"),
                     format!(
@@ -181,8 +170,6 @@ pub fn process_update(content_type: &ContentType, user_data: Data) -> Flash<Redi
 
 #[get("/delete/<id>")]
 pub fn delete(id: i32) -> Flash<Redirect> {
-    diesel::delete(users::table.filter(users::id.eq(id)))
-        .execute(&crate::establish_connection())
-        .expect("Ops, we can't delete this.");
+    db::users::delete(id);
     Flash::success(Redirect::to("/"), "Yey! The User was deleted.")
 }
