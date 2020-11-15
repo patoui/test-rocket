@@ -1,14 +1,18 @@
 # test-rocket
 Testing Rust Rocket framework
 
+## Requirements
+
+- Rust nightly `rustup default nightly`
+- Node/npm
+
 ## Setup
 
-- Install rust
-- Run nightly `rustup default nightly`
 - Copy example env `cp .env.example .env`
 - Update `.env` database url to the appropriate value
-- Start app `cargo run`
 - Run migrations `diesel migration run`
+- Run asset build `npm run dev` (or `npm run prod`)
+- Start app `cargo run`
 
 #### Resources
 

@@ -3,16 +3,23 @@
   "version": "1.0.0",
   "description": "Testing Rust Rocket framework",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
+    "cross-env": "^7.0.2",
     "laravel-mix": "^5.0.9",
     "laravel-mix-svelte": "github:wewowweb/laravel-mix-svelte",
     "svelte": "^3.29.7",
-    "svelte-loader": "^2.13.6",
+    "svelte-loader": "^2.13.6"
+  },
+  "devDependencies": {
     "vue-template-compiler": "^2.6.12"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "repository": {
     "type": "git",
