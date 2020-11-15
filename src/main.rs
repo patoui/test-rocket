@@ -18,9 +18,9 @@ use serde::Serialize;
 use std::env;
 
 mod db;
-pub mod models;
+mod models;
+mod routes;
 pub mod schema;
-pub mod users;
 
 /* This will return our mysql connection to use with diesel */
 pub fn establish_connection() -> MysqlConnection {
@@ -61,12 +61,12 @@ fn main() {
             "/",
             routes![
                 hello,
-                users::list,
-                users::new,
-                users::insert,
-                users::update,
-                users::process_update,
-                users::delete
+                routes::users::list,
+                routes::users::new,
+                routes::users::insert,
+                routes::users::update,
+                routes::users::process_update,
+                routes::users::delete
             ],
         )
         .mount("/api", routes![api_hello])

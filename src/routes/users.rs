@@ -9,8 +9,8 @@ use diesel::prelude::*;
 use crate::schema::users;
 
 /* Database data structs */
-use crate::models::NewUser;
-use crate::models::User;
+use crate::models::users::{NewUser, User};
+// use crate::models::users::User;
 
 /* Database interactions */
 use crate::db;

@@ -5,8 +5,8 @@ use diesel::prelude::*;
 use crate::schema::users;
 
 /* Database data structs (User, NewUser) */
-use crate::models::NewUser;
-use crate::models::User;
+use crate::models::users::NewUser;
+use crate::models::users::User;
 
 use diesel::result::Error;
 use std::result::Result;
